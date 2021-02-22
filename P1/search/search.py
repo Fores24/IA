@@ -90,22 +90,22 @@ def depthFirstSearch(problem):
     "*** YOUR CODE HERE ***"
 
     "hay que devolver algo como s ,w ,s de las direcciones"
-    q_abiertos = util.Stack()
-    q_abiertos.push(problem.getStartState())
-    aux = []
+
     acciones = []
-    if q_abiertos.isEmpty():
-        return None
-    "le falta sacarle las direcciones y listo"
-    while(problem.isGoalState(q_abiertos) == False):
-        actual = q_abiertos.pop()
-        if actual not in aux:
-            aux.append(actual)
-        q_abiertos.push(problem.getSuccessors(actual[0]))
-        print(aux)
+    aux = []
+    Nodos = util.Stack()
+    Nodos.push((problem.getStartState(),[],[]))
+    while not Nodos.isEmpty():
+        nodo, accion , visitado = Nodos.pop()
+        if problem.isGoalState(nodo):
+            return acciones
 
+        for hijo , direcciones , pasos in problem.getSuccessors(nodo):
+            if not hijo in visitado:
+                Nodos.push((hijo,accion+[direcciones],visitado+[nodo]))
+                acciones = accion+[direcciones]
 
-    return  q_abiertos
+    return  None
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
