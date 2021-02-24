@@ -88,9 +88,6 @@ def depthFirstSearch(problem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
-
-    "hay que devolver algo como s ,w ,s de las direcciones"
-
     acciones = []
     aux = []
     Nodos = util.Stack()
@@ -99,23 +96,35 @@ def depthFirstSearch(problem):
         nodo, accion , visitado = Nodos.pop()
         if problem.isGoalState(nodo):
             return acciones
-
         for hijo , direcciones , pasos in problem.getSuccessors(nodo):
             if not hijo in visitado:
                 Nodos.push((hijo,accion+[direcciones],visitado+[nodo]))
                 acciones = accion+[direcciones]
-
     return  None
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
+
+
     util.raiseNotDefined()
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    aux = []
+    Nodos = util.PriorityQueue()
+    Nodos.push((problem.getStartState(), [], 0),0)
+    while not Nodos.isEmpty():
+        nodo, accion, coste = Nodos.pop()
+        if not nodo in aux:
+            aux.append(nodo)
+            if problem.isGoalState(nodo):
+                return accion
+            for hijo, direcciones, pasos in problem.getSuccessors(nodo):
+                    Nodos.push((hijo, accion + [direcciones],  coste + pasos),coste+pasos)
+
+    return None
 
 def nullHeuristic(state, problem=None):
     """
