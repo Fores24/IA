@@ -138,16 +138,105 @@ def uniformCostSearch(problem):
     return None
 
 def nullHeuristic(state, problem=None):
-    """
+     """
     A heuristic function estimates the cost from the current state to the nearest
     goal in the provided SearchProblem.  This heuristic is trivial.
+    """
+
+    """ Condiciones de Esquina
+        - 1 PUNTO en cada esquina (¿como se sabe si la casilla tiene PUNTO?)
+        - Heuristica:
+            (- Elegir Dirección X: Ver que nodo hijo cuesta menos para priorizar dirección.)
+            - Elegir Dirección X = DERECHA por ejemplo:
+            
+            - Bucle mientras que nªEsquinas != 4
+                - Comprobar si se puede mover en X
+                    - Si : Mover en X 
+                    - No :
+                        - Elegir nueva Dirección Y (perpendicular): Ir abajo (o arriba)
+                        - Comproabr si se puede mover en Y
+                            - Si : Mover en Y
+                            - No:
+                                - COmprobar si es Esquina / Existe PUNTO en Casilla (Función??)
+                                - Si:
+                                
+            FUNCION ESQUINA{    
+                                    - nºEsquinas ++
+                                    - Si n1Esquinas = 1 or 3
+                                    - Cambiar Dirección Y
+                                        - Volver arriba del bucle
+                    
+                                    - Si nº Esquinas = 2 
+                                    - Cambiar dirección X
+                                    - Volver arriba del bucle
+                                    
+                                    - Si nºEsquinas = 4 
+                                    - Return (FIN).
+                            }
+                            
+                                - No:
+                                    - Bucle Mientras no se pueda mover en X o Y
+                                        - Comprobar movernos en dirección Y contraria = !Y
+                                            - Si: 
+                                                - Mover en !Y
+                                                - Comproabr si podemos mover en X   
+                                                    - Si:                           
+                                                        - Mover en X                
+                                                        - Comprobar si ESQUINA      
+                                                            - Si:                   
+                                                                - FUNCIÓN ESQUINA   
+                                                            
+                                                    # Sube al principio del bucle y comprueba y mueve en X, si no puede, mueve en Y, pierde el progreso
+                                                    - No: 
+                                                        - Mover en !X
+                                                                                              
+                                            - No:
+                                                - Comprobar movimiento en Dirección X Contraria = !X
+                                                    - Si:
+                                                        - Mover en !X
+                                                    - No:
+                                                        - RETURN ERROR!!!.          #Estas encerrado en un bucle sin fin ni sentido.                     
     """
     return 0
 
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
+    """Lista abirtos y lista cerrados"""
+    Abiertos = util.PriorityQueue()
+    Cerrados = util.PriorityQueue()
+
+    """Nodo Origen en lista abiertos"""
+    Abiertos.push((problem.getStartState(),[],0),0)
+
+    """Repetir"""
+    "Si (Abiertos esta vacia) entonces"
+    "Devolver error"
+    while not Abiertos.isEmpty():
+
+        """Seleccionar el primer nodo, N de Abiertos y ponerlo en Cerrados"""
+        nodo, accion, coste = Abiertos.pop()
+        Cerrados.push((nodo, accion, coste), coste)
+
+        """Si (N == Destino) entonces"""
+        if problem.isGoalState(nodo):
+            """Devolver N"""
+            return nodo
+
+        """Expandir (N) obteniendo un conjunto de sucesores"""
+        for hijo, direcciones, pasos in problem.getSuccessors(nodo):
+            """Para cada (S perteneca a {SucesoresDe(N)})"""
+            """Si (S No Pertenece en Lista Abiertos y S No pertenece a Lista Cerrados) entonces"""
+            if (not hijo in Abiertos) or (not hijo in Cerrados):
+
+                """Guardar N como el predecesor de S"""
+
+                """Meter S en la Lista Abiertos"""
+                Abiertos.push((hijo, accion, coste + pasos), coste + pasos)
+
+        """Hasta que el destino se haya encontrado"""
+
+    return None
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
 
 
 # Abbreviations
