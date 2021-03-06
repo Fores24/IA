@@ -294,15 +294,22 @@ class CornersProblem(search.SearchProblem):
         Returns the start state (in your state space, not the full Pacman state
         space)
         """
+        return (self.startingPosition(),[])
+
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
 
     def isGoalState(self, state):
         """
         Returns whether this search state is a goal state of the problem.
         """
+        nodo = state[0]
+        esquinas = state[1]
+        if nodo in self.corners:
+            if not nodo in esquinas:
+                esquinas.append(nodo)
+            return len(esquinas)==4
+        return False
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
 
     def getSuccessors(self, state):
         """
