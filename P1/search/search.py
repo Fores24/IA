@@ -152,16 +152,19 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     Abiertos.push((problem.getStartState(), [], 0), heuristic(problem.getStartState(), problem))
     while not Abiertos.isEmpty():
         nodo, accion, coste = Abiertos.pop()
+
         if not nodo in Cerrados:
             Cerrados.append(nodo)
+
             if problem.isGoalState(nodo):
                 return accion
 
             for hijo, direcciones, pasos in problem.getSuccessors(nodo):
-                g = coste + pasos
+                g = coste + pasos  # f = g + h
                 Abiertos.push((hijo, accion + [direcciones], coste + pasos), g + heuristic(hijo, problem))
+
     return None
-"*** YOUR CODE HERE ***"
+
 
 
 # Abbreviations
@@ -169,59 +172,3 @@ bfs = breadthFirstSearch
 dfs = depthFirstSearch
 astar = aStarSearch
 ucs = uniformCostSearch
-
-""" Condiciones de Esquina
-      - 1 PUNTO en cada esquina (¿como se sabe si la casilla tiene PUNTO?)
-      - Heuristica:
-          (- Elegir Dirección X: Ver que nodo hijo cuesta menos para priorizar dirección.)
-          - Elegir Dirección X = DERECHA por ejemplo:
-
-          - Bucle mientras que nªEsquinas != 4
-              - Comprobar si se puede mover en X
-                  - Si : Mover en X 
-                  - No :
-                      - Elegir nueva Dirección Y (perpendicular): Ir abajo (o arriba)
-                      - Comproabr si se puede mover en Y
-                          - Si : Mover en Y
-                          - No:
-                              - COmprobar si es Esquina / Existe PUNTO en Casilla (Función??)
-                              - Si:
-
-          FUNCION ESQUINA{    
-                                  - nºEsquinas ++
-                                  - Si n1Esquinas = 1 or 3
-                                  - Cambiar Dirección Y
-                                      - Volver arriba del bucle
-
-                                  - Si nº Esquinas = 2 
-                                  - Cambiar dirección X
-                                  - Volver arriba del bucle
-
-                                  - Si nºEsquinas = 4 
-                                  - Return (FIN).
-                          }
-
-                              - No:
-                                  - Bucle Mientras no se pueda mover en X o Y
-                                      - Comprobar movernos en dirección Y contraria = !Y
-                                          - Si: 
-                                              - Mover en !Y
-                                              - Comproabr si podemos mover en X   
-                                                  - Si:                           
-                                                      - Mover en X                
-                                                      - Comprobar si ESQUINA      
-                                                          - Si:                   
-                                                              - FUNCIÓN ESQUINA   
-
-                                                  # Sube al principio del bucle y comprueba y mueve en X, si no puede, mueve en Y, pierde el progreso
-                                                  - No: 
-                                                      - Mover en !X
-
-                                          - No:
-                                              - Comprobar movimiento en Dirección X Contraria = !X
-                                                  - Si:
-                                                      - Mover en !X
-                                                  - No:
-                                                      - RETURN ERROR!!!.          #Estas encerrado en un bucle sin fin ni sentido.                     
-  """
-

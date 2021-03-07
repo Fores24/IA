@@ -373,7 +373,7 @@ def cornersHeuristic(state, problem):
     admissible (as well as consistent).
     """
     corners = problem.corners # These are the corner coordinates
-    walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
+    #walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
 
     nodo = state[0]
     esquinas = state[1]
