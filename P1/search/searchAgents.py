@@ -294,7 +294,7 @@ class CornersProblem(search.SearchProblem):
         Returns the start state (in your state space, not the full Pacman state
         space)
         """
-        return (self.startingPosition(),[])
+        return ( self.startingPosition, [])
 
         "*** YOUR CODE HERE ***"
 
@@ -307,9 +307,8 @@ class CornersProblem(search.SearchProblem):
         if nodo in self.corners:
             if not nodo in esquinas:
                 esquinas.append(nodo)
-            return len(esquinas)==4
+            return len(esquinas) == 4
         return False
-        "*** YOUR CODE HERE ***"
 
     def getSuccessors(self, state):
         """
@@ -321,7 +320,8 @@ class CornersProblem(search.SearchProblem):
             state, 'action' is the action required to get there, and 'stepCost'
             is the incremental cost of expanding to that successor
         """
-
+        x,y = state[0]
+        esquinas = state[1]
         successors = []
         for action in [Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST]:
             # Add a successor state to the successor list if the action is legal
@@ -331,7 +331,16 @@ class CornersProblem(search.SearchProblem):
             #   nextx, nexty = int(x + dx), int(y + dy)
             #   hitsWall = self.walls[nextx][nexty]
 
-            "*** YOUR CODE HERE ***"
+            dx, dy = Actions.directionToVector(action)
+            nextx, nexty = int(x+dx), int(y+dy)
+            pared = self.walls[nextx][nexty]
+            if not pared:
+                siguiente = list(esquinas)
+                nextState = (nextx, nexty)
+
+                if (not nextState in siguiente) & (nextState in self.corners):
+                    siguiente.append(nextState)
+                successors.append(((nextState, siguiente), action, 1))
 
         self._expanded += 1 # DO NOT CHANGE
         return successors
@@ -366,8 +375,17 @@ def cornersHeuristic(state, problem):
     corners = problem.corners # These are the corner coordinates
     walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
 
-    "*** YOUR CODE HERE ***"
-    return 0 # Default to trivial solution
+    nodo = state[0]
+    esquinas = state[1]
+    sum = 0
+    noVisitado = set(corners) - set(esquinas)
+
+    while len(noVisitado):
+        distancia , esquina = min([(util.manhattanDistance(nodo, corner), corner)for corner in noVisitado])
+        sum += distancia
+        noVisitado.remove(esquina)
+    return sum
+
 
 class AStarCornersAgent(SearchAgent):
     "A SearchAgent for FoodSearchProblem using A* and your foodHeuristic"
