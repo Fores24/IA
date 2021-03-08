@@ -142,7 +142,7 @@ def nullHeuristic(state, problem=None):
     A heuristic function estimates the cost from the current state to the nearest
     goal in the provided SearchProblem.  This heuristic is trivial.
     """
-     return None
+     return 0
 
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
@@ -164,7 +164,6 @@ def aStarSearch(problem, heuristic=nullHeuristic):
                 Abiertos.push((hijo, accion + [direcciones], coste + pasos), g + heuristic(hijo, problem))
 
     return None
-
 
 
 # Abbreviations
