@@ -381,9 +381,9 @@ def cornersHeuristic(state, problem):
     noVisitado = set(corners) - set(esquinas)
 
     while len(noVisitado):
-        distancia , esquina = min([(util.manhattanDistance(nodo, corner), corner)for corner in noVisitado])
+        distancia , nodo = min([(util.manhattanDistance(nodo, corner), corner) for corner in noVisitado])
         sum += distancia
-        noVisitado.remove(esquina)
+        noVisitado.remove(nodo)
     return sum
 
 
