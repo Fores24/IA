@@ -294,9 +294,7 @@ class CornersProblem(search.SearchProblem):
         Returns the start state (in your state space, not the full Pacman state
         space)
         """
-        return ( self.startingPosition, [])
-
-        "*** YOUR CODE HERE ***"
+        return self.startingPosition, []
 
     def isGoalState(self, state):
         """
@@ -320,7 +318,7 @@ class CornersProblem(search.SearchProblem):
             state, 'action' is the action required to get there, and 'stepCost'
             is the incremental cost of expanding to that successor
         """
-        x,y = state[0]
+        x, y = state[0]
         esquinas = state[1]
         successors = []
         for action in [Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST]:

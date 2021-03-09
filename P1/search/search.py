@@ -71,7 +71,7 @@ def tinyMazeSearch(problem):
     from game import Directions
     s = Directions.SOUTH
     w = Directions.WEST
-    return  [s, s, w, s, w, w, s, w]
+    return [s, s, w, s, w, w, s, w]
 
 def depthFirstSearch(problem):
     """
@@ -87,20 +87,19 @@ def depthFirstSearch(problem):
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
-    "*** YOUR CODE HERE ***"
+
     acciones = []
-    aux = []
     Nodos = util.Stack()
-    Nodos.push((problem.getStartState(),[],[]))
+    Nodos.push((problem.getStartState(), [], []))
     while not Nodos.isEmpty():
-        nodo, accion , visitado = Nodos.pop()
+        nodo, accion, visitado = Nodos.pop()
         if problem.isGoalState(nodo):
             return acciones
-        for hijo , direcciones , pasos in problem.getSuccessors(nodo):
+        for hijo, direcciones, pasos in problem.getSuccessors(nodo):
             if not hijo in visitado:
-                Nodos.push((hijo,accion+[direcciones],visitado+[nodo]))
+                Nodos.push((hijo, accion+[direcciones], visitado+[nodo]))
                 acciones = accion+[direcciones]
-    return  None
+    return None
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
@@ -125,7 +124,7 @@ def uniformCostSearch(problem):
     "*** YOUR CODE HERE ***"
     aux = []
     Nodos = util.PriorityQueue()
-    Nodos.push((problem.getStartState(), [], 0),0)
+    Nodos.push((problem.getStartState(), [], 0), 0)
     while not Nodos.isEmpty():
         nodo, accion, coste = Nodos.pop()
         if not nodo in aux:
@@ -133,7 +132,7 @@ def uniformCostSearch(problem):
             if problem.isGoalState(nodo):
                 return accion
             for hijo, direcciones, pasos in problem.getSuccessors(nodo):
-                    Nodos.push((hijo, accion + [direcciones],  coste + pasos),coste+pasos)
+                Nodos.push((hijo, accion + [direcciones],  coste + pasos), coste+pasos)
 
     return None
 
