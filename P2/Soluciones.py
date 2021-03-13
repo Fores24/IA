@@ -33,7 +33,6 @@ class Solution2(StudentHeuristic):
     return 2
 
 class Solution3(StudentHeuristic):
-  class Solution3(StudentHeuristic):
   def get_name(self) -> str:
     return "solucion3"
 
