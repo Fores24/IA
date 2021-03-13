@@ -1,4 +1,9 @@
 import time
+import math
+import reversi
+
+from reversi import Reversi
+
 from game import (
     TwoPlayerGameState,
 )
@@ -28,33 +33,23 @@ class Solution2(StudentHeuristic):
     return 2
 
 class Solution3(StudentHeuristic):
+  class Solution3(StudentHeuristic):
   def get_name(self) -> str:
     return "solucion3"
 
   def evaluation_function(self, state: TwoPlayerGameState) -> float:
-    print(TwoPlayerGameState.generate_successor())
-    return 1
+    #print(state.game.generate_successor(state))
+    corners = [[1, 1], [1, 8], [8, 1], [8, 8]]
+    minDist = 10
+    moves = state.game.generate_successor(state)
+    print(len(moves))
 
-
-class CornerPlayer:
-  def __init__(self, color):
-    self.color = color
-
-  def play(self, board):
-    return self.getNearestCorner(board.valid_moves(self.color))
-
-  def getNearestCorner(self, moves):
-    import math
-    corners = [[1,1],[1,8], [8,1], [8,8]]
-    minDist = 8
-    retMove = None
     for move in moves:
       for corner in corners:
         distX = abs(corner[0] - move.x)
         distY = abs(corner[1] - move.y)
-        dist  = math.sqrt(distX*distX + distY*distY)
+        dist = math.sqrt(distX * distX + distY * distY)
         if dist < minDist:
           minDist = dist
-          retMove = move
 
-    return retMove
+    return minDist
