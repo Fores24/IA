@@ -9,9 +9,13 @@ from __future__ import annotations  # For Python 3.7
 
 import numpy as np
 
+import Soluciones
 from game import Player, TwoPlayerGameState, TwoPlayerMatch
+
 from heuristic import simple_evaluation_function
-from tictactoe import TicTacToe
+from reversi import Reversi
+from Soluciones import Solution1,Solution2,Solution3
+
 from tournament import StudentHeuristic, Tournament
 
 
@@ -48,15 +52,16 @@ class Heuristic3(StudentHeuristic):
 
 def create_match(player1: Player, player2: Player) -> TwoPlayerMatch:
 
-    dim_board = 3
+    dim_board = 8
 
-    initial_board = np.zeros((dim_board, dim_board))
+    initial_board = None
     initial_player = player1
 
-    game = TicTacToe(
+    game = Reversi(
         player1=player1,
         player2=player2,
-        dim_board=dim_board,
+        height=dim_board,
+        width=dim_board
     )
 
     game_state = TwoPlayerGameState(
