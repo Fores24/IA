@@ -1,9 +1,7 @@
-import time
 import math
-import reversi
-
 from reversi import Reversi
-
+import reversi
+from heuristic import *
 from game import (
     TwoPlayerGameState,
 )
@@ -16,21 +14,14 @@ class Solution1(StudentHeuristic):
   def get_name(self) -> str:
     return "solution1"
   def evaluation_function(self, state: TwoPlayerGameState) -> float:
-    # let's use an auxiliary function
-    aux = self.dummy(123)
-    return aux
+    return simple_evaluation_function(state)
 
-  def dummy(self, n: int) -> int:
-    return n + 1
 
 class Solution2(StudentHeuristic):
   def get_name(self) -> str:
     return "solution2"
   def evaluation_function(self, state: TwoPlayerGameState) -> float:
-    print("sleeping")
-    time.sleep(3)
-    print("awake")
-    return 2
+    return complex_evaluation_function(state)
 
 class Solution3(StudentHeuristic):
   def get_name(self) -> str:
@@ -40,9 +31,9 @@ class Solution3(StudentHeuristic):
     #print(state.game.generate_successor(state))
     corners = [[1, 1], [1, 8], [8, 1], [8, 8]]
     minDist = 10
-    moves = state.game.generate_successor(state)
-    print(len(moves))
-
+    game = state.game
+    moves = game.generate_successor(state)
+    print(moves)
     for move in moves:
       for corner in corners:
         distX = abs(corner[0] - move.x)
