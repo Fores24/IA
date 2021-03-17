@@ -70,11 +70,11 @@ def create_match(player1: Player, player2: Player) -> TwoPlayerMatch:
         initial_player=initial_player,
     )
 
-    return TwoPlayerMatch(game_state, max_sec_per_move=1000, gui=False)
+    return TwoPlayerMatch(game_state, max_sec_per_move=1000, gui=True)
 
 
 tour = Tournament(max_depth=3, init_match=create_match)
-strats = {'opt1': [Solution1], 'opt2': [Solution2], 'opt3': [Solution3]}
+strats = {'opt1': [Solution3], 'opt2': [Solution1], 'opt3': [Solution2]}
 
 n = 5
 scores, totals, names = tour.run(
