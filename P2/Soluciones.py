@@ -31,7 +31,6 @@ def str_to_num(str) -> int:
   for letra in str_num:
     if letra == str:
       return str_num[letra]
-
   return -1
 
 class Solution1(StudentHeuristic):
@@ -61,6 +60,16 @@ class Solution2(StudentHeuristic):
 
     return max
 
+
+def not_corner(x, y) -> bool:
+  vecino_esquina = [[1, 2],  [2, 1], [1, 7], [2, 8], [7, 1], [8, 2], [7, 8], [8, 7]]
+  vecino = [x,y]
+
+  if (vecino in vecino_esquina):
+    return True
+
+  return False
+
 class Solution3(StudentHeuristic):
   def get_name(self) -> str:
     return "2301_15_sol3"
@@ -80,8 +89,15 @@ class Solution3(StudentHeuristic):
 
     while moves:
       move = moves.pop().move_code
+
+      if (not move):
+        return 10
+
       x = letra_a_num(move[1])
       y = str_to_num(move[0])
+
+      if (not_corner(x, y) == True):
+        print('TRUE!!')
 
       if y > 4 and x > 4:
         D_B = min(8 - x, 8 - y)
@@ -108,7 +124,7 @@ class Solution3(StudentHeuristic):
 
     return min(min_DA, min_IA, min_IB, min_DB, cuatro)
 
-"""class Solution4(StudentHeuristic):
+class Solution4(StudentHeuristic):
   def get_name(self) -> str:
     return "solucion4"
 
@@ -123,6 +139,15 @@ class Solution3(StudentHeuristic):
 
     while moves:
       move = moves.pop().move_code
+
+      if(not move):
+        return 20
+
+      if (not_corner(str_to_num(move[0]), letra_a_num(move[1])) == True):
+        print('TRUE!!')
+
+      print(not_corner(str_to_num(move[0]), letra_a_num(move[1])))
+
       for corner in corners:
         distX = abs(corner[0] - str_to_num(move[0]))
         distY = abs(letra_a_num(corner[1]) - letra_a_num(move[1]))
@@ -131,12 +156,11 @@ class Solution3(StudentHeuristic):
           minDist = dist
 
     return minDist
-    
-    
-class Solution1(StudentHeuristic):
+
+    """
+class Solution8(StudentHeuristic):
   def get_name(self) -> str:
-    return "solution1"
+    return "solution8"
   def evaluation_function(self, state: TwoPlayerGameState) -> float:
     return simple_evaluation_function(state)
-    
-"""
+    """
