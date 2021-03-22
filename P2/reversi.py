@@ -190,7 +190,6 @@ class Reversi(TwoPlayerGame):
                 board_successor,
                 move_code,
             )
-
             successors.append(successor)
 
         if not successors:
