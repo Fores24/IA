@@ -31,9 +31,10 @@ def str_to_num(str) -> int:
   for letra in str_num:
     if letra == str:
       return str_num[letra]
+
   return -1
 
-class Solution1(StudentHeuristic):
+"""class Solution1(StudentHeuristic):
   def get_name(self) -> str:
     return "2301_15_sol1"
   def evaluation_function(self, state: TwoPlayerGameState) -> float:
@@ -42,7 +43,7 @@ class Solution1(StudentHeuristic):
     moves = game.generate_successors(state)
     return len(moves)
     #devuelve el numero de sucesores (coge el sucesor que de el máximo numero de sucesores)
-
+"""
 
 class Solution2(StudentHeuristic):
   def get_name(self) -> str:
@@ -60,12 +61,10 @@ class Solution2(StudentHeuristic):
 
     return max
 
+def not_corner(L) -> bool:
+  vecino_esquina = [[1, 2], [2, 1], [1, 7], [2, 8], [7, 1], [8, 2], [7, 8], [8, 7]]
 
-def not_corner(x, y) -> bool:
-  vecino_esquina = [[1, 2],  [2, 1], [1, 7], [2, 8], [7, 1], [8, 2], [7, 8], [8, 7]]
-  vecino = [x,y]
-
-  if (vecino in vecino_esquina):
+  if (L in vecino_esquina):
     return True
 
   return False
@@ -90,43 +89,46 @@ class Solution3(StudentHeuristic):
     while moves:
       move = moves.pop().move_code
 
-      if (not move):
-        return 10
+      if (move):
+        y = letra_a_num(move[4])
+        x = str_to_num(move[1])
 
-      x = letra_a_num(move[1])
-      y = str_to_num(move[0])
+        L = [x, y]
 
-      if (not_corner(x, y) == True):
-        print('TRUE!!')
+        if (not_corner(L) == True):
+          return 20
 
-      if y > 4 and x > 4:
-        D_B = min(8 - x, 8 - y)
-        if min_DB > D_B:
-          min_DB = D_B
+        if (y == 1 and x == 1) or (y == 8 and x == 8) or (y == 1 and x == 8) or (y == 8 and x == 1):
+          return 1
 
-      if y < 4 and x > 4:
-        D_A = min(8 - x, y)
-        if min_DA > D_A:
-          min_DA = D_A
+        if y > 4 and x > 4:
+          D_B = min(8 - x, 8 - y)
+          if min_DB > D_B:
+            min_DB = D_B
 
-      if y > 4 and x < 4:
-        I_B = min(x, 8 - y)
-        if min_IB > I_B:
-          min_IB = I_B
+        if y < 4 and x > 4:
+          D_A = min(8 - x, y)
+          if min_DA > D_A:
+            min_DA = D_A
 
-      if y < 4 and x < 4:
-        I_A = min(x, y)
-        if min_IA > I_A:
-          min_IA = I_A
+        if y > 4 and x < 4:
+          I_B = min(x, 8 - y)
+          if min_IB > I_B:
+            min_IB = I_B
 
-      if y == 4 or x == 4:
-        cuatro = min(x, y)
+        if y < 4 and x < 4:
+          I_A = min(x, y)
+          if min_IA > I_A:
+            min_IA = I_A
+
+        if y == 4 or x == 4:
+          cuatro = min(x, y)
 
     return min(min_DA, min_IA, min_IB, min_DB, cuatro)
 
 class Solution4(StudentHeuristic):
   def get_name(self) -> str:
-    return "solucion4"
+    return "2301_15_sol4"
 
   def evaluation_function(self, state: TwoPlayerGameState) -> float:
     if not isinstance(state.game, Reversi):
@@ -140,25 +142,27 @@ class Solution4(StudentHeuristic):
     while moves:
       move = moves.pop().move_code
 
-      if(not move):
-        return 20
+      if(move):
+        y = letra_a_num(move[4])
+        x = str_to_num(move[1])
 
-      if (not_corner(str_to_num(move[0]), letra_a_num(move[1])) == True):
-        print('TRUE!!')
+        L = [x, y]
 
-      print(not_corner(str_to_num(move[0]), letra_a_num(move[1])))
+        if (not_corner(L) == True):
+          return 20
 
-      for corner in corners:
-        distX = abs(corner[0] - str_to_num(move[0]))
-        distY = abs(letra_a_num(corner[1]) - letra_a_num(move[1]))
-        dist = math.sqrt(distX * distX + distY * distY)
-        if dist < minDist:
-          minDist = dist
+        for corner in corners:
+          distX = abs(corner[0] - x)
+          distY = abs(letra_a_num(corner[1]) - y)
+          dist = math.sqrt(distX * distX + distY * distY)
+          if dist < minDist:
+            minDist = dist
 
     return minDist
 
+
     """
-class Solution8(StudentHeuristic):
+class Solution8(StudentHeuristic):  
   def get_name(self) -> str:
     return "solution8"
   def evaluation_function(self, state: TwoPlayerGameState) -> float:
