@@ -31,7 +31,6 @@ def str_to_num(str) -> int:
   for letra in str_num:
     if letra == str:
       return str_num[letra]
-
   return -1
 
 class Solution1(StudentHeuristic):
@@ -80,6 +79,7 @@ class Solution3(StudentHeuristic):
 
     while moves:
       move = moves.pop().move_code
+
       x = letra_a_num(move[1])
       y = str_to_num(move[0])
 

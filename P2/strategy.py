@@ -205,5 +205,81 @@ class MinimaxAlphaBetaStrategy(Strategy):
         """Compute next state in the game."""
 
         # NOTE <YOUR CODE HERE>
+        #inicializamos las variables a infitito y menos infinito
+        alfa = -np.inf
+        beta = np.inf
+        minmax = -np.inf
+        next_state = None
+        sucesores = self.generate_successors(state)
+
+        for sucesor in sucesores:
+            minimax_value_successor, alfa_s, beta_s = self._min_value(sucesor, self.max_depth_minimax, alfa, beta)
+            if minimax_value_successor > minmax:
+                minmax = minimax_value_successor
+                next_state = sucesor
+
+            if beta_s > alfa:
+                alfa = beta_s
+
+            if alfa >= beta:
+                break
 
         return next_state
+
+    def min_value(
+        self,
+        state: TwoPlayerGameState,
+        depht: int,
+        alfa = int,
+        beta = int,
+    ) -> (float, float, float):
+        if state.end_of_game or depht ==0:
+            minmax = self.heuristic.evaluate(state)
+            alfa = minmax
+            beta = minmax
+        else :
+            minmax = np.inf
+            sucesores = self.generate_successors(state)
+            for sucesor in sucesores:
+                minmax_sucesores, alfa_s, beta_s = self._max_value(sucesor, self.max_depth_minimax, alfa, beta)
+
+                if alfa_s <beta:
+                    beta = alfa_s
+
+                if minmax_sucesores <= minmax:
+                    minmax = minmax_sucesores
+
+                if alfa >= beta:
+                    break
+        return minmax, alfa, beta
+
+    def max_value(
+            self,
+            state: TwoPlayerGameState,
+            depht: int,
+            alfa=int,
+            beta=int,
+    ) -> (float, float, float):
+        if state.end_of_game or depht == 0:
+            minmax = self.heuristic.evaluate(state)
+            alfa = minmax
+            beta = minmax
+        else:
+            minmax = np.inf
+            sucesores = self.generate_successors(state)
+            for sucesor in sucesores:
+                minmax_sucesores, alfa_s, beta_s = self._min_value(sucesor, self.max_depth_minimax, alfa, beta)
+
+                if alfa_s > beta:
+                    beta = alfa_s
+
+                if minmax_sucesores > minmax:
+                    minmax = minmax_sucesores
+
+                if alfa >= beta:
+                    break
+        return minmax, alfa, beta
+
+
+
+
