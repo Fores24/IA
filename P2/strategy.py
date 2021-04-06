@@ -204,8 +204,7 @@ class MinimaxAlphaBetaStrategy(Strategy):
     ) -> TwoPlayerGameState:
         """Compute next state in the game."""
 
-        # NOTE <YOUR CODE HERE>
-        #inicializamos las variables a infitito y menos infinito
+
         alfa = -np.inf
         beta = np.inf
         minmax = -np.inf
@@ -230,10 +229,10 @@ class MinimaxAlphaBetaStrategy(Strategy):
         self,
         state: TwoPlayerGameState,
         depht: int,
-        alfa = int,
-        beta = int,
+        alfa=int,
+        beta=int,
     ) -> (float, float, float):
-        if state.end_of_game or depht ==0:
+        if state.end_of_game or depht == 0:
             minmax = self.heuristic.evaluate(state)
             alfa = minmax
             beta = minmax
@@ -241,7 +240,7 @@ class MinimaxAlphaBetaStrategy(Strategy):
             minmax = np.inf
             sucesores = self.generate_successors(state)
             for sucesor in sucesores:
-                minmax_sucesores, alfa_s, beta_s = self._max_value(sucesor, self.max_depth_minimax, alfa, beta)
+                minmax_sucesores, alfa_s, beta_s = self._max_value(sucesor, depht - 1, alfa, beta)
 
                 if alfa_s < beta:
                     beta = alfa_s
@@ -265,10 +264,10 @@ class MinimaxAlphaBetaStrategy(Strategy):
             alfa = minmax
             beta = minmax
         else:
-            minmax = np.inf
+            minmax = -  np.inf
             sucesores = self.generate_successors(state)
             for sucesor in sucesores:
-                minmax_sucesores, alfa_s, beta_s = self._min_value(sucesor, self.max_depth_minimax, alfa, beta)
+                minmax_sucesores, alfa_s, beta_s = self._min_value(sucesor,  depht - 1, alfa, beta)
 
                 if alfa_s > beta:
                     beta = alfa_s
