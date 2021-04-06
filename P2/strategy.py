@@ -212,7 +212,7 @@ class MinimaxAlphaBetaStrategy(Strategy):
         sucesores = self.generate_successors(state)
 
         for sucesor in sucesores:
-            minimax_value_successor, alfa_s, beta_s = self._min_value(sucesor, self.max_depth_minimax, alfa, beta)
+            minimax_value_successor, alfa_s, beta_s = self.min_value(sucesor, self.max_depth_minimax, alfa, beta)
             if minimax_value_successor > minmax:
                 minmax = minimax_value_successor
                 next_state = sucesor
@@ -240,7 +240,7 @@ class MinimaxAlphaBetaStrategy(Strategy):
             minmax = np.inf
             sucesores = self.generate_successors(state)
             for sucesor in sucesores:
-                minmax_sucesores, alfa_s, beta_s = self._max_value(sucesor, depht - 1, alfa, beta)
+                minmax_sucesores, alfa_s, beta_s = self.max_value(sucesor, depht - 1, alfa, beta)
 
                 if alfa_s < beta:
                     beta = alfa_s
@@ -267,7 +267,7 @@ class MinimaxAlphaBetaStrategy(Strategy):
             minmax = -  np.inf
             sucesores = self.generate_successors(state)
             for sucesor in sucesores:
-                minmax_sucesores, alfa_s, beta_s = self._min_value(sucesor,  depht - 1, alfa, beta)
+                minmax_sucesores, alfa_s, beta_s = self.min_value(sucesor,  depht - 1, alfa, beta)
 
                 if alfa_s > beta:
                     beta = alfa_s
