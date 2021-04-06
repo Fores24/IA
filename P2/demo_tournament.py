@@ -9,12 +9,11 @@ from __future__ import annotations  # For Python 3.7
 
 import numpy as np
 
-import Soluciones
 from game import Player, TwoPlayerGameState, TwoPlayerMatch
 
 from heuristic import simple_evaluation_function
 from reversi import Reversi
-from Soluciones import Solution1,Solution2,Solution3
+from Soluciones import Solution4, Solution2, Solution3
 
 from tournament import StudentHeuristic, Tournament
 
@@ -74,7 +73,7 @@ def create_match(player1: Player, player2: Player) -> TwoPlayerMatch:
 
 
 tour = Tournament(max_depth=3, init_match=create_match)
-strats = {'opt1': [Solution3], 'opt2': [Solution1], 'opt3': [Solution2]}
+strats = {'opt1': [Solution3], 'opt2': [Solution4], 'opt3': [Solution2]}
 
 n = 5
 scores, totals, names = tour.run(
