@@ -1,32 +1,5 @@
 %Practicas 3 IA - UAM --> PROLOG
 %By: Guillermo Hoyo Bravo, Saul Almanza del Pie
-%
-
-% --------------------------FUNCIONES--GLOBALES-------------------------------%
-%FUNCIONES COPIADAS DE PÁGINA - https://www.ic.unicamp.br/~meidanis/courses/mc336/2009s2/prolog/problemas/
-
-% TAMAÑO DE UNA LISTA == FUNCION length(L,tam).
-% L es una Lista
-% N es el número de elementos de la lista
-%tam([],0).
-%tam([_|L],N) :- tam(L,N), N is N + 1.
-
-% SACAR PENULTIMO ELEMENTO DE UNA LISTA
-%
-penultimo(X,[X,_]).
-penultimo(X,[_,Y|Ys]) :- penultimo(X,[Y|Ys]).
-
-% SACAR ELEMENTO K DE UNA LISTA
-% X elemento a encontrar
-% [X|L] = LISTA [X = Cabeza || L = Cola]
-% K = Posición del elemento
-element_at(X,[X|_],1).
-element_at(X,[_|L],K) :- K > 1, K1 is K - 1, element_at(X,L,K1).
-
-%NO PERTENECE
-%
-no_pertenece(_,[]).
-no_pertenece(X,[Y|Ys]):- X\=Y, no_pertenece(X, Ys).
 
 %----------------------------- - -.CABECERA.- - ----------------------------------%
 
@@ -63,7 +36,12 @@ sum_pot_prod([X|Xs], [Y|Ys], P, C):- sum_pot_prod(Xs, Ys, P, C1), C is C1 + (X*Y
 segundo_penultimo(L,_,_):- length(L,T),  (T < 2), print("ERROR 2.1 Longitud"), !, fail.
 segundo_penultimo(L,X,Y):-(segundo(X,L), penultimo(Y,L)).
 segundo(X,L):- N = 2, element_at(X, L, N).
-
+% SACAR PENULTIMO ELEMENTO DE UNA LISTA
+penultimo(X,[X,_]).
+penultimo(X,[_,Y|Ys]) :- penultimo(X,[Y|Ys]).
+% SACAR ELEMENTO K DE UNA LISTA
+element_at(X,[X|_],1).
+element_at(X,[_|L],K) :- K > 1, K1 is K - 1, element_at(X,L,K1).
 
 %**************
 % EJERCICIO 3. sublista/5
@@ -83,6 +61,10 @@ segundo(X,L):- N = 2, element_at(X, L, N).
 % Indices"), !, fail.
 % sublista(L,_,_,E,_):- no_pertenece(E,L), print("ERROR 3.1 Elemento"),
 % !, fail.
+%
+%NO PERTENECE
+%no_pertenece(_,[]).
+%no_pertenece(X,[Y|Ys]):- X\=Y, no_pertenece(X, Ys).
 
 % Implementacion
 % sublista(L, 1, Mayor, E, L) :- length(L, Len), Mayor == Len, member(E,
