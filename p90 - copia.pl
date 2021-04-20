@@ -128,11 +128,9 @@ espacio_lineal(Menor,Mayor,Numero_elementos,[Menor|Rejilla]):- Num is Numero_ele
 %***************/
 
 sum_lista([X|_], _):- X < 0, print("ERROR 5.1 Negativos"), !, fail.
-
-normalizar(ENTRADA,SALIDA):- sum_elementos(ENTRADA, R),  divide_elementos(ENTRADA,R,SALIDA), !.
 sum_lista([], 0).
-sum_lista([X|Xs], R):- sum_elementos(Xs, R2), R is R2 + X.
-%CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+sum_lista([X|Xs], R):- sum_lista(Xs, R2), R is R2 + X.
+normalizar(ENTRADA,SALIDA):- sum_lista(ENTRADA, R),  divide_elementos(ENTRADA,R,SALIDA), !.
 divide_elementos([],_,[]):-!.
 divide_elementos([X|L],R,[Y|SALIDA]):- Y is (X/R), divide_elementos(L,R,SALIDA).
 
@@ -160,7 +158,12 @@ divide_elementos([X|L],R,[Y|SALIDA]):- Y is (X/R), divide_elementos(L,R,SALIDA).
 %       KL: Numero de valor real. Divergencia KL.
 %
 %***************/
-
+%
+log_lista([X|_], _, _):- X < 0, print("ERROR 6.1 Negativos"), !, fail.
+log_lista(_,[Y|_], _):- Y < 0, print("ERROR 6.1 Negativos"), !, fail.
+log_lista([],[],0):- !.
+log_lista([X|Xs], [Y|Ys], R):- log_lista(Xs, Ys, R2), R is R2 + X*log(X/Y), !.
+divergencia(D1,D2,KL):- log_lista(D1, D2, KL), !.
 
 %**************
 % EJERCICIO 7. producto_kronecker/3
