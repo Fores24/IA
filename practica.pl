@@ -28,6 +28,8 @@ element_at(X,[_|L],K) :- K > 1, K1 is K - 1, element_at(X,L,K1).
 no_pertenece(X,[]).
 no_pertenece(X,[Y|Ys]):- X\=Y, no_pertenece(X, Ys).
 
+%----------------------------- - -.CABECERA.- - ----------------------------------%
+
 write_log(S) :- open('error_logs.txt', append, Out), write(Out, S), write(Out, '\n'), close(Out).
 
 /***************
